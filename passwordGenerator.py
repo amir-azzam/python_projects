@@ -1,5 +1,6 @@
-#I know I could have made a class for each char not this shit that I made but it will be a next step Inshallah
+import os
 import random
+from pathlib import Path
 
 #LowerCase
 lowerCaseCharOne = chr(random.randint(97,122))
@@ -50,4 +51,19 @@ passwordJoin = [
 ]
 random.shuffle(passwordJoin)
 password = "".join(passwordJoin)
+
+path = Path("./passwords")
+
+path.mkdir(parents= True , exist_ok= True)
+
+if "password1.txt" not in os.listdir(path): 
+    filename = "password1.txt"
+else:
+    password_files = os.listdir(path) # list kol files el fe password folder
+    password_numbers = [int(name.split(".")[0][8:]) for name in password_files] # 0 > filenme 8 > number file
+    max_num = max(password_numbers)
+    filename = f"password{max_num + 1}.txt"
+with open(os.path.join(path,filename), 'w') as f:
+    f.write(password)   
+
 print(password)
